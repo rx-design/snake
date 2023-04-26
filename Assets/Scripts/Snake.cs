@@ -126,8 +126,15 @@ public class Snake : MonoBehaviour
 
         transform.position = Vector3.zero;
 
+        // Reset health and points
+        GameManager.health = 5;
+        GameManager.points = 0;
+        pointsManager.UpdateHealth();
+        pointsManager.UpdatePoints();
+
         _gameOver = false;
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
