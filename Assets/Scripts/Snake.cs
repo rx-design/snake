@@ -159,12 +159,20 @@ public class Snake : MonoBehaviour
             {
                 _gameOver = true;
                 gameOverCanvas.gameObject.SetActive(true);
+
+                // Show the game over screen with the final score
+                GameOverScreen gameOverScreen = FindObjectOfType<GameOverScreen>();
+                gameOverScreen.ShowGameOverScreen(GameManager.points);
             }
         }
         else if (other.CompareTag("Obstacle"))
         {
             _gameOver = true;
             gameOverCanvas.gameObject.SetActive(true);
+
+            // Show the game over screen with the final score
+            GameOverScreen gameOverScreen = FindObjectOfType<GameOverScreen>();
+            gameOverScreen.ShowGameOverScreen(GameManager.points);
         }
     }
 }
