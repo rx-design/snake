@@ -6,12 +6,17 @@ namespace MyGameNamespace
     public class GameOverScreen : MonoBehaviour
     {
         public TMP_Text messageText;
-        public TMP_Text scoreText;
+        public TMP_Text pointsText;
+
+        private void Start()
+        {
+            PointsManager.instance.UpdatePoints();
+        }
 
         public void ShowGameOverScreen(int score)
         {
             messageText.text = "Game Over!";
-            scoreText.text = "Score: " + score;
+            pointsText.text = "Final Points: " + score.ToString();
         }
     }
 }
