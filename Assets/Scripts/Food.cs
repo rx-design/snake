@@ -1,18 +1,22 @@
+using enums;
 using UnityEngine;
 
 public class Food : MonoBehaviour
 {
+    public delegate void IsTakenDelegate(Food food);
+
+    public static event IsTakenDelegate IsTaken;
+
     public BoxCollider2D gridArea;
     public Snake snake;
-
-    public bool good;
+    public Letter letter;
 
     private void Start()
     {
         RandomizePosition();
     }
 
-    public void RandomizePosition()
+    private void RandomizePosition()
     {
         var bounds = gridArea.bounds;
 
@@ -44,9 +48,8 @@ public class Food : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            RandomizePosition();
-        }
+        if (!other.CompareTag("Player")) return;
+        IsTaken?.Invoke(this);
+        RandomizePosition();
     }
 }

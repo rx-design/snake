@@ -4,36 +4,22 @@ using UnityEngine;
 
 public class Snake : MonoBehaviour
 {
+    public delegate void IsDiedDelegate();
+
+    public static event IsDiedDelegate IsDied;
+
     public Transform segmentPrefab;
     public int initialSize = 4;
-    public float speed = 1.0f;
+    public float speed = 20.0f;
     public float speedMultiplier = 1.0f;
 
-    private readonly List<Transform> _segments = new List<Transform>();
+    private readonly List<Transform> _segments = new();
     private Vector2 _input;
     private Vector2 _direction = Vector2.right;
     private float _nextUpdate;
-    private bool _gameOver;
-
-    [SerializeField]
-    private PointsManager pointsManager;
-
-    public Canvas gameOverCanvas;
-
-    private void Start()
-    {
-        ResetState();
-        pointsManager.UpdateHealth();
-        gameOverCanvas.gameObject.SetActive(false);
-    }
 
     private void Update()
     {
-        if (_gameOver)
-        {
-            return;
-        }
-
         if (_direction.x != 0.0f)
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -60,7 +46,7 @@ public class Snake : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_gameOver)
+        if (Time.time < _nextUpdate)
         {
             return;
         }
@@ -92,25 +78,16 @@ public class Snake : MonoBehaviour
             .Any(s => s.position.Equals(position));
     }
 
-    public void RestartGame()
-    {
-        ResetState();
-        gameOverCanvas.gameObject.SetActive(false);
-    }
-
-
     private void Grow()
     {
         var segment = Instantiate(segmentPrefab);
-        segment.position = _segments[_segments.Count - 1].position;
+        segment.position = _segments.Last().position;
 
         _segments.Add(segment);
     }
 
-
     private void ResetState()
     {
-        GameManager.StartOver();
         for (var i = 1; i < _segments.Count; i++)
         {
             Destroy(_segments[i].gameObject);
@@ -125,55 +102,27 @@ public class Snake : MonoBehaviour
         }
 
         transform.position = Vector3.zero;
-
-        // Reset health and points
-        GameManager.health = 5;
-        GameManager.points = 0;
-        pointsManager.UpdateHealth();
-        pointsManager.UpdatePoints();
-
-        _gameOver = false;
     }
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_gameOver)
-        {
-            return;
-        }
-
         if (other.CompareTag("Food"))
         {
-            Food f = other.gameObject.GetComponent<Food>();
-            if (f.good)
-            {
-                Grow();
-                GameManager.AddPoints();
-                pointsManager.UpdatePoints();
-                return;
-            }
-            GameManager.RemoveHealth();
-            pointsManager.UpdateHealth();
-            if (GameManager.health <= 0)
-            {
-                _gameOver = true;
-                gameOverCanvas.gameObject.SetActive(true);
-
-                // Show the game over screen with the final score
-                GameOverScreen gameOverScreen = FindObjectOfType<GameOverScreen>();
-                gameOverScreen.ShowGameOverScreen(GameManager.points);
-            }
+            Grow();
         }
         else if (other.CompareTag("Obstacle"))
         {
-            _gameOver = true;
-            gameOverCanvas.gameObject.SetActive(true);
-
-            // Show the game over screen with the final score
-            GameOverScreen gameOverScreen = FindObjectOfType<GameOverScreen>();
-            gameOverScreen.ShowGameOverScreen(GameManager.points);
+            IsDied?.Invoke();
         }
     }
-}
 
+    private void OnEnable()
+    {
+        GameManager.GameStarted += ResetState;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.GameStarted -= ResetState;
+    }
+}
