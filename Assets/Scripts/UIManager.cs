@@ -1,13 +1,20 @@
+using Enums;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
     public GameObject gameInfo;
-    public GameObject gameOver;
     public GameObject gamePause;
+    public GameObject gameResult;
 
-    private bool _isPaused;
     private bool _isPlaying;
+    private bool _isPaused;
+
+    private void OnEnable()
+    {
+        GameManager.GameStarted.AddListener(OnGameStarted);
+        GameManager.GameEnded.AddListener(OnGameEnded);
+    }
 
     private void Start()
     {
@@ -42,31 +49,19 @@ public class UIManager : MonoBehaviour
         _isPaused = !_isPaused;
     }
 
-    private void OnGameIsEnded(int score)
-    {
-        gameInfo.gameObject.SetActive(false);
-        gameOver.gameObject.SetActive(true);
-
-        _isPlaying = false;
-    }
-
     private void OnGameStarted()
     {
-        gameOver.gameObject.SetActive(false);
+        gameResult.gameObject.SetActive(false);
         gameInfo.gameObject.SetActive(true);
 
         _isPlaying = true;
     }
 
-    private void OnEnable()
+    private void OnGameEnded(Result result, int score)
     {
-        GameManager.GameIsEnded += OnGameIsEnded;
-        GameManager.GameStarted += OnGameStarted;
-    }
+        gameInfo.gameObject.SetActive(false);
+        gameResult.gameObject.SetActive(true);
 
-    private void OnDisable()
-    {
-        GameManager.GameIsEnded -= OnGameIsEnded;
-        GameManager.GameStarted -= OnGameStarted;
+        _isPlaying = false;
     }
 }

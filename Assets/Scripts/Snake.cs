@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Snake : MonoBehaviour
 {
-    public delegate void IsDiedDelegate();
-
-    public static event IsDiedDelegate IsDied;
-
+    public static readonly UnityEvent IsDied = new();
     public Transform segmentPrefab;
     public int initialSize = 4;
     public float speed = 20.0f;
@@ -17,6 +15,11 @@ public class Snake : MonoBehaviour
     private Vector2 _input;
     private Vector2 _direction = Vector2.right;
     private float _nextUpdate;
+
+    private void OnEnable()
+    {
+        GameManager.GameStarted.AddListener(ResetState);
+    }
 
     private void Update()
     {
@@ -114,15 +117,5 @@ public class Snake : MonoBehaviour
         {
             IsDied?.Invoke();
         }
-    }
-
-    private void OnEnable()
-    {
-        GameManager.GameStarted += ResetState;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.GameStarted -= ResetState;
     }
 }

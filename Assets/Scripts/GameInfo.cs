@@ -5,26 +5,27 @@ public class GameInfo : MonoBehaviour
 {
     public TMP_Text lives;
     public TMP_Text score;
+    public TMP_Text chars;
 
-    private void UpdateLivesValue(int value)
+    private void OnEnable()
+    {
+        GameManager.LivesUpdated.AddListener(UpdateLives);
+        GameManager.ScoreUpdated.AddListener(UpdateScore);
+        GameManager.CharsUpdated.AddListener(UpdateChars);
+    }
+
+    private void UpdateLives(int value)
     {
         lives.text = $"Lives: {value}";
     }
 
-    private void UpdateScoreValue(int value)
+    private void UpdateScore(int value)
     {
         score.text = $"Score: {value}";
     }
 
-    private void OnEnable()
+    private void UpdateChars(char[] _, char[] letters)
     {
-        GameManager.LivesUpdated += UpdateLivesValue;
-        GameManager.ScoreUpdated += UpdateScoreValue;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.LivesUpdated -= UpdateLivesValue;
-        GameManager.ScoreUpdated -= UpdateScoreValue;
+        chars.text = $"{new string(letters)}";
     }
 }
