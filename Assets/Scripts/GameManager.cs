@@ -3,6 +3,8 @@ using Enums;
 using Objects;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,9 +16,13 @@ public class GameManager : MonoBehaviour
     public int startingLives = 5;
     public Word word;
 
+    [SerializeField] private List<Word> words;
+
     private int _lives;
     private int _score;
     private char[] _chars;
+    private int _currentLevel = 0;
+    private int _scoreAtLevelStart;
 
     private void OnEnable()
     {
@@ -27,8 +33,9 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         _lives = startingLives;
-        _score = 0;
+        //_score = 0;//
         _chars = word.chars.ToList().Select(_ => '_').ToArray();
+        _scoreAtLevelStart = _score;
 
         LivesUpdated?.Invoke(_lives);
         ScoreUpdated?.Invoke(_score);
@@ -36,6 +43,36 @@ public class GameManager : MonoBehaviour
         GameStarted?.Invoke();
 
         Time.timeScale = 1.0f;
+    }
+    public void ResetScore()
+    {
+        _score = _scoreAtLevelStart;
+        ScoreUpdated?.Invoke(_score);
+        Start();
+    }
+    public void RestartLevel()
+    {
+        ResetScore();
+        Start();
+            
+    }
+    public void LoadNextLevel()
+    {
+        _currentLevel++;
+        if (_currentLevel < words.Count)
+        {
+            word = words[_currentLevel];
+            Start();
+        }
+        else
+        {
+   
+        }
+        
+    }
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void DecreaseLives()
