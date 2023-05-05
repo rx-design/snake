@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     public GameObject gameInfo;
     public GameObject gamePause;
     public GameObject gameResult;
+    public GameObject gameStartScreen;
 
     private bool _isPlaying;
     private bool _isPaused;
@@ -26,6 +27,13 @@ public class UIManager : MonoBehaviour
         if (_isPlaying && Input.GetKeyDown(KeyCode.Space))
         {
             TogglePause();
+        }
+        if (!_isPlaying && Input.anyKey)
+        {
+            gameStartScreen.gameObject.SetActive(false);
+            _isPlaying = true;
+            Time.timeScale = 1.0f;
+
         }
     }
 
@@ -49,12 +57,14 @@ public class UIManager : MonoBehaviour
         _isPaused = !_isPaused;
     }
 
+
     private void OnGameStarted()
     {
         gameResult.gameObject.SetActive(false);
         gameInfo.gameObject.SetActive(true);
+        gameStartScreen.gameObject.SetActive(true);
 
-        _isPlaying = true;
+        _isPlaying = false;
     }
 
     private void OnGameEnded(Result result, int score)

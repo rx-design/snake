@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         CharsUpdated?.Invoke(word.chars, _chars);
         GameStarted?.Invoke();
 
-        Time.timeScale = 1.0f;
+        Time.timeScale = 0.0f;
     }
     public void ResetScore()
     {

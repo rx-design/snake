@@ -31,7 +31,7 @@ public class FoodManager : MonoBehaviour
         }
 
         foods[0].transform.position = GetRandomPosition();
-        foods[0].GetComponent<SpriteRenderer>().color = Color.yellow;
+        foods[0].GetComponent<SpriteRenderer>().color = Color.green;
         foods[0].letter = (Letter)chars[Random.Range(0, chars.Count - 1)];
 
         foods[1].transform.position = GetRandomPosition();
