@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     private char[] _chars;
     private int _currentLevel = 1;
     private int _scoreAtLevelStart;
+    private bool _dialogueShown;
 
     private void OnEnable()
     {
@@ -41,13 +42,10 @@ public class GameManager : MonoBehaviour
         CharsUpdated?.Invoke(word.chars, _chars);
         GameStarted?.Invoke();
 
-
-        if (!_dialogueShown)
-        {
-            Time.timeScale = 0.0f;
-            DialogueManager.instance.StartDialogue(dialogue);
-            _dialogueShown = true;
-        }
+        if (_dialogueShown) return;
+        Time.timeScale = 0.0f;
+        DialogueManager.instance.StartDialogue(dialogue);
+        _dialogueShown = true;
     }
 
     public void RestartLevel()
@@ -88,7 +86,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0.0f;
         GameEnded?.Invoke(result, _score);
     }
-    private bool _dialogueShown = false;
 
     private bool CheckLetter(Letter letter)
     {
