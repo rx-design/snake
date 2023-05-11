@@ -41,8 +41,13 @@ public class GameManager : MonoBehaviour
         CharsUpdated?.Invoke(word.chars, _chars);
         GameStarted?.Invoke();
 
-        Time.timeScale = 0.0f;
-        DialogueManager.instance.StartDialogue(dialogue);
+
+        if (!_dialogueShown)
+        {
+            Time.timeScale = 0.0f;
+            DialogueManager.instance.StartDialogue(dialogue);
+            _dialogueShown = true;
+        }
     }
 
     public void RestartLevel()
@@ -83,6 +88,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0.0f;
         GameEnded?.Invoke(result, _score);
     }
+    private bool _dialogueShown = false;
 
     private bool CheckLetter(Letter letter)
     {
