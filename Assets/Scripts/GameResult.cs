@@ -30,7 +30,7 @@ public class GameResult : MonoBehaviour
         score.text = result switch
         {
             Result.Win => $"Score: {value}",
-            _ => $"Final Score: {value}"
+            _ => $"Final Score: {value}\nBest Score: {GetHighScore(value)}"
         };
 
         switch (result)
@@ -57,5 +57,16 @@ public class GameResult : MonoBehaviour
     public void TryAgain()
     {
         gameManager.RestartLevel();
+    }
+
+    private static int GetHighScore(int finalScore)
+    {
+        var bestScore = PlayerPrefs.GetInt("Score", 0);
+
+        if (finalScore <= bestScore) return bestScore;
+        PlayerPrefs.SetInt("Score", finalScore);
+        PlayerPrefs.Save();
+
+        return finalScore;
     }
 }
