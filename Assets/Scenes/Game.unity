@@ -2626,8 +2626,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-  - Hello!
-  - Hello again!
+  - Once upon a time, in a world not too different from ours, lived a curious little
+    snake named Sly.
+  - Sly was always full of life, slithering around, exploring the vast expanses of
+    the jungle.
+  - But Sly had a problem. He wasn't very good at English. This made him the subject
+    of constant teasing from his friends.
+  - '"Hey Sly, do you know what ''serpent'' means?" they would ask, chuckling among
+    themselves.'
+  - '''Um... no,'' Sly would respond, feeling embarrassed."'
+  - One day, Sly had had enough. He decided he would learn English and prove to his
+    friends that he was just as smart as they were.
+  - Fortunately, the jungle was a magical place. It was said that eating the fruits
+    from the 'Tree of Letters' could grant knowledge of the English language.
+  - Each fruit from the tree had a letter on it. Eating the fruits in the correct
+    order would form words, and consuming each correct word would increase Sly's
+    understanding of English.
+  - And so, Sly's journey began. With determination in his eyes, he set out to find
+    the Tree of Letters and start his English-learning adventure.
+  - Little did he know, this quest would be more challenging than he thought. But
+    Sly was ready to take on any obstacles to finally stop the teasing and become
+    the smartest snake in the jungle.
   startingLives: 3
   word: {fileID: 11400000, guid: a4135c906ab5b44fc9c93dbe0a526b4b, type: 2}
   words:
@@ -3841,15 +3860,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.8156863}
+  m_Color: {r: 0.3773585, g: 0.33962265, b: 0.33962265, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: bda340df0354d464f839460f8c1cf889, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
