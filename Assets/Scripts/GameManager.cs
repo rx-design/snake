@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static readonly UnityEvent<char[], char[]> CharsUpdated = new();
     public static readonly UnityEvent GameStarted = new();
     public static readonly UnityEvent<Result, int> GameEnded = new();
+    public string[] dialogue;
     public int startingLives = 5;
     public Word word;
 
@@ -43,19 +44,22 @@ public class GameManager : MonoBehaviour
         GameStarted?.Invoke();
 
         Time.timeScale = 0.0f;
+        DialogueManager.instance.StartDialogue(dialogue);
     }
+
     public void ResetScore()
     {
         _score = _scoreAtLevelStart;
         ScoreUpdated?.Invoke(_score);
         Start();
     }
+
     public void RestartLevel()
     {
         ResetScore();
         Start();
-            
     }
+
     public void LoadNextLevel()
     {
         _currentLevel++;
@@ -66,10 +70,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-   
         }
-        
     }
+
     public void GoToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");

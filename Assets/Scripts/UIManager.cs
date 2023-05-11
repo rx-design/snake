@@ -1,5 +1,6 @@
 using Enums;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class UIManager : MonoBehaviour
     public GameObject gamePause;
     public GameObject gameResult;
     public GameObject gameStartScreen;
+    public GameObject dialogueScreen;
 
     private bool _isPreStart = true;
     private bool _isPlaying;
@@ -25,6 +27,11 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        if (dialogueScreen.gameObject.activeInHierarchy)
+        {
+            return;
+        }
+
         if (_isPreStart && Input.anyKey)
         {
             gameStartScreen.gameObject.SetActive(false);
