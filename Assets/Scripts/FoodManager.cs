@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Enums;
 using UnityEngine;
 
@@ -6,7 +7,9 @@ public class FoodManager : MonoBehaviour
 {
     public BoxCollider2D gridArea;
     public Snake snake;
-    public Food[] foods;
+    public Food foodPrefab;
+
+    private readonly List<Food> _food = new();
 
     private void OnEnable()
     {
@@ -15,6 +18,13 @@ public class FoodManager : MonoBehaviour
 
     private void RandomizeAll(char[] initialLetters, char[] letters)
     {
+        foreach (var oldFood in _food)
+        {
+            Destroy(oldFood.gameObject);
+        }
+
+        _food.Clear();
+
         var chars = new List<char>();
 
         for (var i = 0; i < letters.Length; i++)
@@ -25,23 +35,24 @@ public class FoodManager : MonoBehaviour
             }
         }
 
-        if (chars.Count == 0)
+        foreach (Letter letter in chars)
         {
-            return;
+            var newFood = Instantiate(foodPrefab,  GetRandomPosition(), Quaternion.identity);
+            newFood.letter = letter;
+            newFood.GetComponent<SpriteRenderer>().color = Color.green; // TODO: Use texture
+            _food.Add(newFood);
         }
 
-        foods[0].transform.position = GetRandomPosition();
-        foods[0].GetComponent<SpriteRenderer>().color = Color.green;
-        foods[0].letter = (Letter)chars[Random.Range(0, chars.Count - 1)];
-
-        foods[1].transform.position = GetRandomPosition();
-        foods[1].GetComponent<SpriteRenderer>().color = Color.red;
-        foods[1].letter = (Letter)Random.Range(0, 25);
+        var newFakeFood = Instantiate(foodPrefab,  GetRandomPosition(), Quaternion.identity);
+        newFakeFood.letter = (Letter)Random.Range(0, 25);
+        newFakeFood.GetComponent<SpriteRenderer>().color = Color.red; // TODO: Use texture
+        _food.Add(newFakeFood);
     }
 
     private bool IsValidPosition(Vector3 position)
     {
-        return !snake.Occupies(position);
+        return !snake.Occupies(position) && !_food
+            .Any(f => f.gameObject.transform.position.Equals(position));;
     }
 
     private Vector3 GetRandomPosition()
