@@ -8,6 +8,7 @@ public class FoodManager : MonoBehaviour
     public BoxCollider2D gridArea;
     public Snake snake;
     public Food foodPrefab;
+    Color newColor = new Color(103f / 255f, 38f / 255f, 1f / 255f);
 
     private readonly List<Food> _food = new();
 
@@ -39,13 +40,13 @@ public class FoodManager : MonoBehaviour
         {
             var newFood = Instantiate(foodPrefab,  GetRandomPosition(), Quaternion.identity);
             newFood.letter = letter;
-            newFood.GetComponent<SpriteRenderer>().color = Color.green; // TODO: Use texture
+            newFood.GetComponent<SpriteRenderer>().color = newColor; // TODO: Use texture
             _food.Add(newFood);
         }
 
         var newFakeFood = Instantiate(foodPrefab,  GetRandomPosition(), Quaternion.identity);
         newFakeFood.letter = (Letter)Random.Range(0, 25);
-        newFakeFood.GetComponent<SpriteRenderer>().color = Color.red; // TODO: Use texture
+        newFakeFood.GetComponent<SpriteRenderer>().color = newColor; // TODO: Use texture
         _food.Add(newFakeFood);
     }
 
