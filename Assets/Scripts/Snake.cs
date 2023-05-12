@@ -101,6 +101,7 @@ public class Snake : MonoBehaviour
 
     private void ResetState()
     {
+        _input = Vector2.zero;
         _head.SetDirection(Vector2.right, Vector2.zero);
         _head.transform.position = Vector3.zero;
 

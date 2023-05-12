@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bdaafc2b646406cb2830d9d9eed9c05, type: 3}
-  m_Name: Computer
+  m_Name: Serpent
   m_EditorClassIdentifier: 
-  name: Computer
-  chars: 43004f004d0050005500540045005200
+  name: Serpent
+  hint: '"Another name of snake"'
+  chars: 530045005200500045004e005400

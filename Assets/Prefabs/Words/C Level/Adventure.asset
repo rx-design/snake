@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bdaafc2b646406cb2830d9d9eed9c05, type: 3}
-  m_Name: Apple
+  m_Name: Adventure
   m_EditorClassIdentifier: 
-  name: Apple
-  chars: 4100500050004c004500
+  name: Adventure
+  hint: ' "A fun and exciting journey or experience."'
+  chars: 41004400560045004e005400550052004500

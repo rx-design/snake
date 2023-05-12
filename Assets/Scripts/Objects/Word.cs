@@ -7,6 +7,7 @@ namespace Objects
     public class Word : ScriptableObject
     {
         public new string name = "New Word";
+        public string hint;
 
         public char[] chars =
         {
