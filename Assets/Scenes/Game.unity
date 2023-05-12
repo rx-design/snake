@@ -1483,7 +1483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridArea: {fileID: 1768618952}
   snake: {fileID: 911868348}
-  foodPrefab: {fileID: 5460927626399201557, guid: d5ae3edd608824c12902a47fe9eb4404, type: 3}
+  foodPrefab: {fileID: 8147987803134893176, guid: d5ae3edd608824c12902a47fe9eb4404, type: 3}
 --- !u!4 &729031294
 Transform:
   m_ObjectHideFlags: 0
