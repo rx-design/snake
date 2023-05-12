@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static readonly UnityEvent<char[], char[]> CharsUpdated = new();
     public static readonly UnityEvent GameStarted = new();
     public static readonly UnityEvent<Result, int> GameEnded = new();
+    public static readonly UnityEvent<string> WordHintUpdated = new UnityEvent<string>();
     public string[] dialogue;
     public int startingLives = 5;
     public List<Word> words;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
         LivesUpdated?.Invoke(_lives);
         ScoreUpdated?.Invoke(_score);
         CharsUpdated?.Invoke(word.chars, _chars);
+        WordHintUpdated?.Invoke(word.hint); // New line
         GameStarted?.Invoke();
 
         if (_dialogueShown) return;
@@ -47,6 +49,7 @@ public class GameManager : MonoBehaviour
         DialogueManager.instance.StartDialogue(dialogue);
         _dialogueShown = true;
     }
+
 
     public void RestartLevel()
     {
@@ -58,8 +61,10 @@ public class GameManager : MonoBehaviour
     {
         _currentLevel++;
         if (_currentLevel > words.Count) return;
+        WordHintUpdated?.Invoke(words[_currentLevel - 1].hint); // New line
         Start();
     }
+
 
     public void GoToMainMenu()
     {
