@@ -1,19 +1,27 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Enums;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FoodManager : MonoBehaviour
 {
     public BoxCollider2D gridArea;
     public Snake snake;
     public Food foodPrefab;
+    Color newColor = new Color(103f / 255f, 38f / 255f, 1f / 255f);
 
     private readonly List<Food> _food = new();
 
     private void OnEnable()
     {
         GameManager.CharsUpdated.AddListener(RandomizeAll);
+    }
+
+    private static Letter GetRandomLetter()
+    {
+        return (Letter)Enum.GetValues(typeof(Letter)).GetValue(Random.Range(0, 25));
     }
 
     private void RandomizeAll(char[] initialLetters, char[] letters)
@@ -39,20 +47,20 @@ public class FoodManager : MonoBehaviour
         {
             var newFood = Instantiate(foodPrefab,  GetRandomPosition(), Quaternion.identity);
             newFood.letter = letter;
-            newFood.GetComponent<SpriteRenderer>().color = Color.green; // TODO: Use texture
+            newFood.GetComponent<SpriteRenderer>().color = newColor; // TODO: Use texture
             _food.Add(newFood);
         }
 
         var newFakeFood = Instantiate(foodPrefab,  GetRandomPosition(), Quaternion.identity);
-        newFakeFood.letter = (Letter)Random.Range(0, 25);
-        newFakeFood.GetComponent<SpriteRenderer>().color = Color.red; // TODO: Use texture
+        newFakeFood.letter = GetRandomLetter();
+        newFakeFood.GetComponent<SpriteRenderer>().color = newColor; // TODO: Use texture
         _food.Add(newFakeFood);
     }
 
     private bool IsValidPosition(Vector3 position)
     {
         return !snake.Occupies(position) && !_food
-            .Any(f => f.gameObject.transform.position.Equals(position));;
+            .Any(f => f.gameObject.transform.position.Equals(position));
     }
 
     private Vector3 GetRandomPosition()
