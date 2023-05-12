@@ -1186,9 +1186,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameInfo: {fileID: 1638326803}
   gamePause: {fileID: 182278746}
+  hintPanel: {fileID: 789409190}
   gameResult: {fileID: 1182924890}
   gameStartScreen: {fileID: 1141684437}
   dialogueScreen: {fileID: 1888896733}
+  hintPanelText: {fileID: 1413579041}
 --- !u!114 &359971308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1920,14 +1922,16 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 789409191}
+  - {fileID: 1413579040}
   m_Father: {fileID: 182278747}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -0.00000083447, y: 0.000015259}
+  m_SizeDelta: {x: 785.694, y: 226.291}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &779252157
 MonoBehaviour:
@@ -1949,7 +1953,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Paused
+  m_text: 'Paused
+
+
+    Press "H" to show the hint!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3db139d6388ee414cb432b834a66ce0e, type: 2}
   m_sharedMaterial: {fileID: 2521140785670176483, guid: 3db139d6388ee414cb432b834a66ce0e, type: 2}
@@ -1976,8 +1983,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 63.22
+  m_fontSizeBase: 63.22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2025,6 +2032,82 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779252155}
+  m_CullTransparentMesh: 1
+--- !u!1 &789409190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 789409191}
+  - component: {fileID: 789409193}
+  - component: {fileID: 789409192}
+  m_Layer: 5
+  m_Name: HintPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &789409191
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789409190}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 779252156}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -1.401001, y: -0.93400574}
+  m_SizeDelta: {x: 1926.311, y: 1039.372}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &789409192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789409190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &789409193
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789409190}
   m_CullTransparentMesh: 1
 --- !u!1 &853897962
 GameObject:
@@ -2648,11 +2731,22 @@ MonoBehaviour:
     Sly was ready to take on any obstacles to finally stop the teasing and become
     the smartest snake in the jungle.
   startingLives: 3
-  word: {fileID: 11400000, guid: a4135c906ab5b44fc9c93dbe0a526b4b, type: 2}
   words:
-  - {fileID: 11400000, guid: 5d430bee5757bf044a2af02d677d7086, type: 2}
+  - {fileID: 11400000, guid: 709c117c08d7f244f862527802a10f4a, type: 2}
   - {fileID: 11400000, guid: d8b33b1b710adb54699db90b41238a11, type: 2}
   - {fileID: 11400000, guid: 5d430bee5757bf044a2af02d677d7086, type: 2}
+  - {fileID: 11400000, guid: a4135c906ab5b44fc9c93dbe0a526b4b, type: 2}
+  - {fileID: 11400000, guid: 2d6535796684152449cee3df93285184, type: 2}
+  - {fileID: 11400000, guid: afb0388157fa21d4fa92d18fbe10cc19, type: 2}
+  - {fileID: 11400000, guid: 0292f94471a294843a0500f8a67266c4, type: 2}
+  - {fileID: 11400000, guid: 221126f0d05b4914ab8ae28624bcd017, type: 2}
+  - {fileID: 11400000, guid: 42e1647388c4da046b700baec3260be3, type: 2}
+  - {fileID: 11400000, guid: 8f1c91be25a1ce7489d4c6a99b5ab8c1, type: 2}
+  - {fileID: 11400000, guid: 354b6f4db118a174aaa861de57fe111b, type: 2}
+  - {fileID: 11400000, guid: 3226debb852d5fe428b57bd17402e53e, type: 2}
+  - {fileID: 11400000, guid: a5e7529614d1847488373330f4f7e89f, type: 2}
+  - {fileID: 11400000, guid: a5af16e1863ba434880ccd76c7a94c02, type: 2}
+  - {fileID: 11400000, guid: ccbf629619084a6479d9c977cb82e35c, type: 2}
 --- !u!1 &993693557
 GameObject:
   m_ObjectHideFlags: 0
@@ -3169,6 +3263,86 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1413579039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1413579040}
+  - component: {fileID: 1413579042}
+  - component: {fileID: 1413579041}
+  m_Layer: 5
+  m_Name: Hint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1413579040
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413579039}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 779252156}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1.401, y: -0.93402}
+  m_SizeDelta: {x: 1544.229, y: 518.037}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1413579041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413579039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: c8ba5fe89718ddb43a6705690c17c17d, type: 3}
+    m_FontSize: 50
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 5
+    m_MaxSize: 187
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: A
+--- !u!222 &1413579042
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413579039}
+  m_CullTransparentMesh: 1
 --- !u!1 &1418709811
 GameObject:
   m_ObjectHideFlags: 0

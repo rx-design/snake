@@ -1,28 +1,34 @@
 using Enums;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public GameObject gameInfo;
     public GameObject gamePause;
+    public GameObject hintPanel;
     public GameObject gameResult;
     public GameObject gameStartScreen;
     public GameObject dialogueScreen;
+    public Text hintPanelText; // Reference to the Text component in the hint panel
 
     private bool _isPreStart = true;
     private bool _isPlaying;
     private bool _isPaused;
+    private bool _isHintShown = false;
 
     private void OnEnable()
     {
         GameManager.GameStarted.AddListener(OnGameStarted);
         GameManager.GameEnded.AddListener(OnGameEnded);
+        GameManager.WordHintUpdated.AddListener(UpdateHintPanel);
     }
 
     private void Start()
     {
         gamePause.gameObject.SetActive(false);
+        hintPanel.SetActive(false);
+        hintPanelText.enabled = false; // Disable the hint text at the start
     }
 
     private void Update()
@@ -38,12 +44,25 @@ public class UIManager : MonoBehaviour
             _isPlaying = true;
             _isPreStart = false;
             Time.timeScale = 1.0f;
-
         }
-        else if (_isPlaying && Input.GetKeyDown(KeyCode.Space))
+        else if (_isPlaying)
         {
-            TogglePause();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                TogglePause();
+            }
+            else if (Input.GetKeyDown(KeyCode.H) && _isPaused)
+            {
+                ToggleHintPanel();
+            }
         }
+    }
+
+    private void ToggleHintPanel()
+    {
+        _isHintShown = !_isHintShown;
+        hintPanel.SetActive(_isHintShown);
+        hintPanelText.enabled = _isHintShown; // Enable/Disable the hint text along with the hint panel
     }
 
     private void TogglePause()
@@ -52,6 +71,9 @@ public class UIManager : MonoBehaviour
         {
             gamePause.gameObject.SetActive(false);
             gameInfo.gameObject.SetActive(true);
+            _isHintShown = false;
+            hintPanel.SetActive(false);
+            hintPanelText.enabled = false; // Disable the hint text when unpaused
 
             Time.timeScale = 1.0f;
         }
@@ -66,6 +88,10 @@ public class UIManager : MonoBehaviour
         _isPaused = !_isPaused;
     }
 
+    private void UpdateHintPanel(string hint)
+    {
+        hintPanelText.text = hint;
+    }
 
     private void OnGameStarted()
     {
