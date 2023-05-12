@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
         GameStarted?.Invoke();
 
         if (_dialogueShown) return;
-        Time.timeScale = 0.0f;
         DialogueManager.instance.StartDialogue(dialogue);
         _dialogueShown = true;
     }
@@ -94,7 +93,6 @@ public class GameManager : MonoBehaviour
 
     private void OnGameOver(Result result)
     {
-        Time.timeScale = 0.0f;
         GameEnded?.Invoke(result, _score);
     }
 

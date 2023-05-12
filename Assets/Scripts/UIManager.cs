@@ -88,6 +88,7 @@ public class UIManager : MonoBehaviour
 
     private void OnGameStarted()
     {
+        Time.timeScale = 0.0f;
         gameResult.gameObject.SetActive(false);
         gameInfo.gameObject.SetActive(true);
 
@@ -102,9 +103,9 @@ public class UIManager : MonoBehaviour
 
     private void OnGameEnded(Result result, int score)
     {
+        Time.timeScale = 0.0f;
+        _isPlaying = false;
         gameInfo.gameObject.SetActive(false);
         gameResult.gameObject.SetActive(true);
-
-        _isPlaying = false;
     }
 }
