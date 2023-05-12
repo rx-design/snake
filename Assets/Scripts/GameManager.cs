@@ -13,16 +13,16 @@ public class GameManager : MonoBehaviour
     public static readonly UnityEvent<char[], char[]> CharsUpdated = new();
     public static readonly UnityEvent GameStarted = new();
     public static readonly UnityEvent<Result, int> GameEnded = new();
+    public string[] dialogue;
     public int startingLives = 5;
-    public Word word;
-
-    [SerializeField] private List<Word> words;
+    public List<Word> words;
 
     private int _lives;
     private int _score;
     private char[] _chars;
-    private int _currentLevel = 0;
+    private int _currentLevel = 1;
     private int _scoreAtLevelStart;
+    private bool _dialogueShown;
 
     private void OnEnable()
     {
@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
+        var word = GetWord();
         _lives = startingLives;
-        //_score = 0;//
         _chars = word.chars.ToList().Select(_ => '_').ToArray();
         _scoreAtLevelStart = _score;
 
@@ -42,34 +42,25 @@ public class GameManager : MonoBehaviour
         CharsUpdated?.Invoke(word.chars, _chars);
         GameStarted?.Invoke();
 
+        if (_dialogueShown) return;
         Time.timeScale = 0.0f;
+        DialogueManager.instance.StartDialogue(dialogue);
+        _dialogueShown = true;
     }
-    public void ResetScore()
-    {
-        _score = _scoreAtLevelStart;
-        ScoreUpdated?.Invoke(_score);
-        Start();
-    }
+
     public void RestartLevel()
     {
-        ResetScore();
+        _score = _scoreAtLevelStart; // Revert score to the level start
         Start();
-            
     }
+
     public void LoadNextLevel()
     {
         _currentLevel++;
-        if (_currentLevel < words.Count)
-        {
-            word = words[_currentLevel];
-            Start();
-        }
-        else
-        {
-   
-        }
-        
+        if (_currentLevel > words.Count) return;
+        Start();
     }
+
     public void GoToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
@@ -85,6 +76,11 @@ public class GameManager : MonoBehaviour
         _score++;
     }
 
+    private Word GetWord()
+    {
+        return words[_currentLevel - 1];
+    }
+
     private void OnGameOver(Result result)
     {
         Time.timeScale = 0.0f;
@@ -93,6 +89,8 @@ public class GameManager : MonoBehaviour
 
     private bool CheckLetter(Letter letter)
     {
+        var word = GetWord();
+
         for (var i = 0; i < word.chars.Length; i++)
         {
             if (word.chars[i] != (char)letter || _chars[i] != '_') continue;
@@ -114,10 +112,13 @@ public class GameManager : MonoBehaviour
             IncreaseScore();
             ScoreUpdated?.Invoke(_score);
 
-            if (!_chars.Contains('_'))
-            {
-                OnGameOver(Result.Win);
-            }
+            if (_chars.Contains('_')) return;
+
+            var result = _currentLevel < words.Count
+                ? Result.Win
+                : Result.GameWin;
+
+            OnGameOver(result);
 
             return;
         }

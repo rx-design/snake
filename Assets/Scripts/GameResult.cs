@@ -20,26 +20,53 @@ public class GameResult : MonoBehaviour
 
     private void UpdateText(Result result, int value)
     {
-        title.text = result == Result.Win ? "Victory!" : "Game over!";
-        score.text = $"Final Score: {value}";
+        title.text = result switch
+        {
+            Result.Win => "Well done.",
+            Result.GameWin => "Victory!",
+            _ => "Game over."
+        };
 
-        if (result == Result.Win)
+        score.text = result switch
         {
-            nextLevelButton.gameObject.SetActive(true);
-            playAgainButton.gameObject.SetActive(false);
-            mainMenuButton.gameObject.SetActive(false);
-        }
-        else
+            Result.Win => $"Score: {value}",
+            _ => $"Final Score: {value}\nBest Score: {GetHighScore(value)}"
+        };
+
+        switch (result)
         {
-            nextLevelButton.gameObject.SetActive(false);
-            playAgainButton.gameObject.SetActive(true);
-            mainMenuButton.gameObject.SetActive(true);
+            case Result.Win:
+                nextLevelButton.gameObject.SetActive(true);
+                playAgainButton.gameObject.SetActive(false);
+                mainMenuButton.gameObject.SetActive(false);
+                break;
+            case Result.GameWin:
+                nextLevelButton.gameObject.SetActive(false);
+                playAgainButton.gameObject.SetActive(false);
+                mainMenuButton.gameObject.SetActive(true);
+                break;
+            case Result.Lose:
+            default:
+                nextLevelButton.gameObject.SetActive(false);
+                playAgainButton.gameObject.SetActive(true);
+                mainMenuButton.gameObject.SetActive(true);
+                break;
         }
     }
 
     public void TryAgain()
     {
-        gameManager.ResetScore();
-        gameManager.Start();
+        gameManager.RestartLevel();
+    }
+
+    private static int GetHighScore(int finalScore)
+    {
+        var bestScore = PlayerPrefs.GetInt("Score", 0);
+
+        if (finalScore <= bestScore) return bestScore;
+        PlayerPrefs.SetInt("Score", finalScore);
+        PlayerPrefs.Save();
+
+        return finalScore;
     }
 }
