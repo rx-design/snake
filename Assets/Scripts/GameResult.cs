@@ -1,6 +1,6 @@
 using Enums;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameResult : MonoBehaviour
@@ -10,8 +10,6 @@ public class GameResult : MonoBehaviour
     public Button nextLevelButton;
     public Button playAgainButton;
     public Button mainMenuButton;
-
-    public GameManager gameManager;
 
     private void OnEnable()
     {
@@ -56,7 +54,7 @@ public class GameResult : MonoBehaviour
 
     public void TryAgain()
     {
-        gameManager.RestartLevel();
+        GameManager.instance.RestartLevel();
     }
 
     private static int GetHighScore(int finalScore)

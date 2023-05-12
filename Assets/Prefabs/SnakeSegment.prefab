@@ -128,3 +128,4 @@ MonoBehaviour:
   tail: {fileID: 21300000, guid: 1b32a66666cdc7942af21c6944b25b9f, type: 3}
   body: {fileID: 21300000, guid: 4e15fde8c9b6b524e8a2be5fbde5d37f, type: 3}
   corner: {fileID: 21300000, guid: 96d5d15bff0b3a24a95f8bb1a5c7aa5d, type: 3}
+  spriteRenderer: {fileID: 9151036772646382067}

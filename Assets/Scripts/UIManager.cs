@@ -8,15 +8,41 @@ public class UIManager : MonoBehaviour
     public GameObject gamePause;
     public GameObject hintPanel;
     public GameObject gameResult;
-    public GameObject gameStartScreen;
-    public GameObject dialogueScreen;
-    public Text hintPanelText; // Reference to the Text component in the hint panel
+    public GameObject gameControls;
+    public GameObject gameDialogue;
+    public Text hintPanelText;
 
     private bool _isControlSchemeShown;
-    private bool _isPreStart = true;
-    private bool _isPlaying;
+    private bool _isHintShown;
     private bool _isPaused;
-    private bool _isHintShown = false;
+    private bool _isPlaying;
+    private bool _isPreStart = true;
+
+    private void Start()
+    {
+        gamePause.gameObject.SetActive(false);
+        hintPanel.SetActive(false);
+        hintPanelText.enabled = false;
+    }
+
+    private void Update()
+    {
+        if (gameDialogue.gameObject.activeInHierarchy) return;
+
+        if (_isPreStart && Input.anyKey)
+        {
+            gameControls.gameObject.SetActive(false);
+            _isPlaying = true;
+            _isPreStart = false;
+            Time.timeScale = 1.0f;
+        }
+        else if (_isPlaying)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                TogglePause();
+            else if (Input.GetKeyDown(KeyCode.H) && _isPaused) ToggleHintPanel();
+        }
+    }
 
     private void OnEnable()
     {
@@ -25,45 +51,11 @@ public class UIManager : MonoBehaviour
         GameManager.WordHintUpdated.AddListener(UpdateHintPanel);
     }
 
-    private void Start()
-    {
-        gamePause.gameObject.SetActive(false);
-        hintPanel.SetActive(false);
-        hintPanelText.enabled = false; // Disable the hint text at the start
-    }
-
-    private void Update()
-    {
-        if (dialogueScreen.gameObject.activeInHierarchy)
-        {
-            return;
-        }
-
-        if (_isPreStart && Input.anyKey)
-        {
-            gameStartScreen.gameObject.SetActive(false);
-            _isPlaying = true;
-            _isPreStart = false;
-            Time.timeScale = 1.0f;
-        }
-        else if (_isPlaying)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                TogglePause();
-            }
-            else if (Input.GetKeyDown(KeyCode.H) && _isPaused)
-            {
-                ToggleHintPanel();
-            }
-        }
-    }
-
     private void ToggleHintPanel()
     {
         _isHintShown = !_isHintShown;
         hintPanel.SetActive(_isHintShown);
-        hintPanelText.enabled = _isHintShown; // Enable/Disable the hint text along with the hint panel
+        hintPanelText.enabled = _isHintShown;
     }
 
     private void TogglePause()
@@ -74,7 +66,7 @@ public class UIManager : MonoBehaviour
             gameInfo.gameObject.SetActive(true);
             _isHintShown = false;
             hintPanel.SetActive(false);
-            hintPanelText.enabled = false; // Disable the hint text when unpaused
+            hintPanelText.enabled = false;
 
             Time.timeScale = 1.0f;
         }
@@ -96,12 +88,13 @@ public class UIManager : MonoBehaviour
 
     private void OnGameStarted()
     {
+        Time.timeScale = 0.0f;
         gameResult.gameObject.SetActive(false);
         gameInfo.gameObject.SetActive(true);
 
         if (!_isControlSchemeShown)
         {
-            gameStartScreen.gameObject.SetActive(true);
+            gameControls.gameObject.SetActive(true);
             _isControlSchemeShown = true;
         }
 
@@ -110,9 +103,9 @@ public class UIManager : MonoBehaviour
 
     private void OnGameEnded(Result result, int score)
     {
+        Time.timeScale = 0.0f;
+        _isPlaying = false;
         gameInfo.gameObject.SetActive(false);
         gameResult.gameObject.SetActive(true);
-
-        _isPlaying = false;
     }
 }

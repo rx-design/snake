@@ -939,8 +939,8 @@ MonoBehaviour:
   gamePause: {fileID: 182278746}
   hintPanel: {fileID: 789409190}
   gameResult: {fileID: 1182924890}
-  gameStartScreen: {fileID: 1141684437}
-  dialogueScreen: {fileID: 1888896733}
+  gameControls: {fileID: 1141684437}
+  gameDialogue: {fileID: 1888896733}
   hintPanelText: {fileID: 1413579041}
 --- !u!114 &359971308
 MonoBehaviour:
@@ -2500,7 +2500,7 @@ GameObject:
   - component: {fileID: 1141684440}
   - component: {fileID: 1141684439}
   m_Layer: 5
-  m_Name: Game Start Screen
+  m_Name: Game Controls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2800,7 +2800,6 @@ MonoBehaviour:
   nextLevelButton: {fileID: 47751521}
   playAgainButton: {fileID: 719246507}
   mainMenuButton: {fileID: 1418709813}
-  gameManager: {fileID: 950613216}
 --- !u!1 &1218717488
 GameObject:
   m_ObjectHideFlags: 0
