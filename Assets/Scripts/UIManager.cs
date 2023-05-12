@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject dialogueScreen;
     public Text hintPanelText; // Reference to the Text component in the hint panel
 
+    private bool _isControlSchemeShown;
     private bool _isPreStart = true;
     private bool _isPlaying;
     private bool _isPaused;
@@ -97,7 +98,12 @@ public class UIManager : MonoBehaviour
     {
         gameResult.gameObject.SetActive(false);
         gameInfo.gameObject.SetActive(true);
-        gameStartScreen.gameObject.SetActive(true);
+
+        if (!_isControlSchemeShown)
+        {
+            gameStartScreen.gameObject.SetActive(true);
+            _isControlSchemeShown = true;
+        }
 
         _isPreStart = true;
     }
