@@ -17,15 +17,9 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(string[] lines)
     {
-        if (lines.Length < 1)
-        {
-            return;
-        }
+        if (lines.Length < 1) return;
 
-        if (_dialogueLines != null)
-        {
-            return;
-        }
+        if (_dialogueLines != null) return;
 
         _dialogueLines = lines;
         AdvanceDialogue();
@@ -35,13 +29,9 @@ public class DialogueManager : MonoBehaviour
     public void ContinueDialogue()
     {
         if (_dialogueProgress < _dialogueLines.Length)
-        {
             AdvanceDialogue();
-        }
         else
-        {
             EndDialogue();
-        }
     }
 
     private void AdvanceDialogue()

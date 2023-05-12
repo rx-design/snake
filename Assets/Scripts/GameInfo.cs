@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class GameInfo : MonoBehaviour
 {

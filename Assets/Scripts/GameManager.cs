@@ -1,34 +1,34 @@
+using System.Collections.Generic;
 using System.Linq;
 using Enums;
 using Objects;
 using UnityEngine;
 using UnityEngine.Events;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     public static readonly UnityEvent<int> LivesUpdated = new();
     public static readonly UnityEvent<int> ScoreUpdated = new();
     public static readonly UnityEvent<char[], char[]> CharsUpdated = new();
     public static readonly UnityEvent GameStarted = new();
     public static readonly UnityEvent<Result, int> GameEnded = new();
-    public static readonly UnityEvent<string> WordHintUpdated = new UnityEvent<string>();
+    public static readonly UnityEvent<string> WordHintUpdated = new();
     public string[] dialogue;
     public int startingLives = 5;
     public List<Word> words;
 
-    private int _lives;
-    private int _score;
     private char[] _chars;
     private int _currentLevel = 1;
-    private int _scoreAtLevelStart;
     private bool _dialogueShown;
+    private int _lives;
+    private int _score;
+    private int _scoreAtLevelStart;
 
-    private void OnEnable()
+    public void Awake()
     {
-        Food.IsTaken.AddListener(OnFoodIsTaken);
-        Snake.IsDied.AddListener(() => OnGameOver(Result.Lose));
+        instance = this;
     }
 
     public void Start()
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         LivesUpdated?.Invoke(_lives);
         ScoreUpdated?.Invoke(_score);
         CharsUpdated?.Invoke(word.chars, _chars);
-        WordHintUpdated?.Invoke(word.hint); // New line
+        WordHintUpdated?.Invoke(word.hint);
         GameStarted?.Invoke();
 
         if (_dialogueShown) return;
@@ -50,10 +50,16 @@ public class GameManager : MonoBehaviour
         _dialogueShown = true;
     }
 
+    private void OnEnable()
+    {
+        Food.IsTaken.AddListener(OnFoodIsTaken);
+        Snake.IsDied.AddListener(() => OnGameOver(Result.Lose));
+    }
+
 
     public void RestartLevel()
     {
-        _score = _scoreAtLevelStart; // Revert score to the level start
+        _score = _scoreAtLevelStart;
         Start();
     }
 
@@ -61,7 +67,7 @@ public class GameManager : MonoBehaviour
     {
         _currentLevel++;
         if (_currentLevel > words.Count) return;
-        WordHintUpdated?.Invoke(words[_currentLevel - 1].hint); // New line
+        WordHintUpdated?.Invoke(words[_currentLevel - 1].hint);
         Start();
     }
 
@@ -131,9 +137,6 @@ public class GameManager : MonoBehaviour
         DecreaseLives();
         LivesUpdated?.Invoke(_lives);
 
-        if (_lives <= 0)
-        {
-            OnGameOver(Result.Lose);
-        }
+        if (_lives <= 0) OnGameOver(Result.Lose);
     }
 }

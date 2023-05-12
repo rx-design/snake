@@ -28,31 +28,24 @@ public class FoodManager : MonoBehaviour
 
     private void RandomizeAll(char[] initialLetters, char[] letters)
     {
-        foreach (var oldFood in _food)
-        {
-            Destroy(oldFood.gameObject);
-        }
+        foreach (var oldFood in _food) Destroy(oldFood.gameObject);
 
         _food.Clear();
 
         var chars = new List<char>();
 
         for (var i = 0; i < letters.Length; i++)
-        {
             if (letters[i] == '_')
-            {
                 chars.Add(initialLetters[i]);
-            }
-        }
 
         foreach (Letter letter in chars)
         {
-            var newFood = Instantiate(foodPrefab,  GetRandomPosition(), Quaternion.identity);
+            var newFood = Instantiate(foodPrefab, GetRandomPosition(), Quaternion.identity);
             newFood.letter = letter;
             _food.Add(newFood);
         }
 
-        var newFakeFood = Instantiate(foodPrefab,  GetRandomPosition(), Quaternion.identity);
+        var newFakeFood = Instantiate(foodPrefab, GetRandomPosition(), Quaternion.identity);
         newFakeFood.letter = GetRandomLetter();
         _food.Add(newFakeFood);
     }
@@ -78,10 +71,7 @@ public class FoodManager : MonoBehaviour
                 0.0f
             );
 
-            if (!IsValidPosition(position))
-            {
-                continue;
-            }
+            if (!IsValidPosition(position)) continue;
 
             return position;
         }
