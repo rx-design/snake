@@ -2222,8 +2222,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f20292100e10a44c782f269ab84e1318, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 910ae86f120bf9e4ca3c5fccb64bf6d8, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2286,7 +2286,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1.17, y: 1.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2648,7 +2648,6 @@ MonoBehaviour:
     Sly was ready to take on any obstacles to finally stop the teasing and become
     the smartest snake in the jungle.
   startingLives: 3
-  word: {fileID: 11400000, guid: a4135c906ab5b44fc9c93dbe0a526b4b, type: 2}
   words:
   - {fileID: 11400000, guid: 5d430bee5757bf044a2af02d677d7086, type: 2}
   - {fileID: 11400000, guid: d8b33b1b710adb54699db90b41238a11, type: 2}
