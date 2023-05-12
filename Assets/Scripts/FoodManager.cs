@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Enums;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FoodManager : MonoBehaviour
 {
@@ -15,6 +17,11 @@ public class FoodManager : MonoBehaviour
     private void OnEnable()
     {
         GameManager.CharsUpdated.AddListener(RandomizeAll);
+    }
+
+    private static Letter GetRandomLetter()
+    {
+        return (Letter)Enum.GetValues(typeof(Letter)).GetValue(Random.Range(0, 25));
     }
 
     private void RandomizeAll(char[] initialLetters, char[] letters)
@@ -45,7 +52,7 @@ public class FoodManager : MonoBehaviour
         }
 
         var newFakeFood = Instantiate(foodPrefab,  GetRandomPosition(), Quaternion.identity);
-        newFakeFood.letter = (Letter)Random.Range(0, 25);
+        newFakeFood.letter = GetRandomLetter();
         newFakeFood.GetComponent<SpriteRenderer>().color = newColor; // TODO: Use texture
         _food.Add(newFakeFood);
     }
@@ -53,7 +60,7 @@ public class FoodManager : MonoBehaviour
     private bool IsValidPosition(Vector3 position)
     {
         return !snake.Occupies(position) && !_food
-            .Any(f => f.gameObject.transform.position.Equals(position));;
+            .Any(f => f.gameObject.transform.position.Equals(position));
     }
 
     private Vector3 GetRandomPosition()
