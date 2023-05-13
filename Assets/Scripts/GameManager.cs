@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     {
         _currentLevel++;
         if (_currentLevel > words.Count) return;
-        WordHintUpdated?.Invoke(words[_currentLevel - 1].hint);
+        WordHintUpdated?.Invoke(GetWord().hint);
         Start();
     }
 
@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour
 
     private void IncreaseScore(bool inOrder)
     {
-        print(_lives);
         _score += inOrder ? 2 * _lives : 1;
     }
 

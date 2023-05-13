@@ -1,19 +1,15 @@
 using Enums;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public GameObject gameInfo;
     public GameObject gamePause;
-    public GameObject hintPanel;
     public GameObject gameResult;
     public GameObject gameControls;
     public GameObject gameDialogue;
-    public Text hintPanelText;
 
     private bool _isControlSchemeShown;
-    private bool _isHintShown;
     private bool _isPaused;
     private bool _isPlaying;
     private bool _isPreStart = true;
@@ -21,8 +17,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         gamePause.gameObject.SetActive(false);
-        hintPanel.SetActive(false);
-        hintPanelText.enabled = false;
     }
 
     private void Update()
@@ -36,11 +30,9 @@ public class UIManager : MonoBehaviour
             _isPreStart = false;
             Time.timeScale = 1.0f;
         }
-        else if (_isPlaying)
+        else if (_isPlaying && Input.GetKeyDown(KeyCode.Space))
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-                TogglePause();
-            else if (Input.GetKeyDown(KeyCode.H) && _isPaused) ToggleHintPanel();
+            TogglePause();
         }
     }
 
@@ -48,14 +40,6 @@ public class UIManager : MonoBehaviour
     {
         GameManager.GameStarted.AddListener(OnGameStarted);
         GameManager.GameEnded.AddListener(OnGameEnded);
-        GameManager.WordHintUpdated.AddListener(UpdateHintPanel);
-    }
-
-    private void ToggleHintPanel()
-    {
-        _isHintShown = !_isHintShown;
-        hintPanel.SetActive(_isHintShown);
-        hintPanelText.enabled = _isHintShown;
     }
 
     private void TogglePause()
@@ -64,9 +48,6 @@ public class UIManager : MonoBehaviour
         {
             gamePause.gameObject.SetActive(false);
             gameInfo.gameObject.SetActive(true);
-            _isHintShown = false;
-            hintPanel.SetActive(false);
-            hintPanelText.enabled = false;
 
             Time.timeScale = 1.0f;
         }
@@ -79,11 +60,6 @@ public class UIManager : MonoBehaviour
         }
 
         _isPaused = !_isPaused;
-    }
-
-    private void UpdateHintPanel(string hint)
-    {
-        hintPanelText.text = hint;
     }
 
     private void OnGameStarted()

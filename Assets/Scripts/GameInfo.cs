@@ -6,12 +6,19 @@ public class GameInfo : MonoBehaviour
     public TMP_Text lives;
     public TMP_Text score;
     public TMP_Text chars;
+    public TMP_Text hint;
 
     private void OnEnable()
     {
         GameManager.LivesUpdated.AddListener(UpdateLives);
         GameManager.ScoreUpdated.AddListener(UpdateScore);
         GameManager.CharsUpdated.AddListener(UpdateChars);
+        GameManager.WordHintUpdated.AddListener(UpdateHint);
+    }
+
+    private void UpdateHint(string value)
+    {
+        hint.text = value;
     }
 
     private void UpdateLives(int value)
