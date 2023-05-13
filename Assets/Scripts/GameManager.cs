@@ -81,9 +81,10 @@ public class GameManager : MonoBehaviour
         _lives--;
     }
 
-    private void IncreaseScore()
+    private void IncreaseScore(bool inOrder)
     {
-        _score++;
+        print(_lives);
+        _score += inOrder ? 2 * _lives : 1;
     }
 
     private Word GetWord()
@@ -96,7 +97,12 @@ public class GameManager : MonoBehaviour
         GameEnded?.Invoke(result, _score);
     }
 
-    private bool CheckLetter(Letter letter)
+    private bool IsInOrder(int index)
+    {
+        return !_chars.Where((t, i) => i < index && t == '_').Any();
+    }
+
+    private int CheckLetter(Letter letter)
     {
         var word = GetWord();
 
@@ -106,20 +112,22 @@ public class GameManager : MonoBehaviour
             _chars[i] = (char)letter;
             CharsUpdated?.Invoke(word.chars, _chars, false);
 
-            return true;
+            return i;
         }
 
         CharsUpdated?.Invoke(word.chars, _chars, true);
 
-        return false;
+        return -1;
     }
 
     private void OnFoodIsTaken(Food food)
     {
-        if (CheckLetter(food.letter))
+        var index = CheckLetter(food.letter);
+
+        if (index != -1)
         {
             Destroy(food.gameObject);
-            IncreaseScore();
+            IncreaseScore(IsInOrder(index));
             ScoreUpdated?.Invoke(_score);
 
             if (_chars.Contains('_')) return;
