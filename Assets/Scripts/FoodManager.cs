@@ -26,9 +26,11 @@ public class FoodManager : MonoBehaviour
         return (Letter)letters.GetValue(randomIndex);
     }
 
-    private void RandomizeAll(char[] initialLetters, char[] letters)
+    private void RandomizeAll(char[] initialLetters, char[] letters, bool shouldRandomize)
     {
-        foreach (var oldFood in _food) Destroy(oldFood.gameObject);
+        if (!shouldRandomize) return;
+
+        foreach (var oldFood in _food.Where(oldFood => oldFood != null)) Destroy(oldFood.gameObject);
 
         _food.Clear();
 

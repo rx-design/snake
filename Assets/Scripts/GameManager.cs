@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public static readonly UnityEvent<int> LivesUpdated = new();
     public static readonly UnityEvent<int> ScoreUpdated = new();
-    public static readonly UnityEvent<char[], char[]> CharsUpdated = new();
+    public static readonly UnityEvent<char[], char[], bool> CharsUpdated = new();
     public static readonly UnityEvent GameStarted = new();
     public static readonly UnityEvent<Result, int> GameEnded = new();
     public static readonly UnityEvent<string> WordHintUpdated = new();
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 
         LivesUpdated?.Invoke(_lives);
         ScoreUpdated?.Invoke(_score);
-        CharsUpdated?.Invoke(word.chars, _chars);
+        CharsUpdated?.Invoke(word.chars, _chars, true);
         WordHintUpdated?.Invoke(word.hint);
         GameStarted?.Invoke();
 
@@ -104,12 +104,12 @@ public class GameManager : MonoBehaviour
         {
             if (word.chars[i] != (char)letter || _chars[i] != '_') continue;
             _chars[i] = (char)letter;
-            CharsUpdated?.Invoke(word.chars, _chars);
+            CharsUpdated?.Invoke(word.chars, _chars, false);
 
             return true;
         }
 
-        CharsUpdated?.Invoke(word.chars, _chars);
+        CharsUpdated?.Invoke(word.chars, _chars, true);
 
         return false;
     }
@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
     {
         if (CheckLetter(food.letter))
         {
+            Destroy(food.gameObject);
             IncreaseScore();
             ScoreUpdated?.Invoke(_score);
 

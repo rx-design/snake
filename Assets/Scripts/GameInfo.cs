@@ -24,7 +24,7 @@ public class GameInfo : MonoBehaviour
         score.text = $"Score: {value}";
     }
 
-    private void UpdateChars(char[] _, char[] letters)
+    private void UpdateChars(char[] _, char[] letters, bool __)
     {
         chars.text = $"{new string(letters)}";
     }
