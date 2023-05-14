@@ -1,11 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager instance;
     public GameObject dialoguePanel;
     public TMP_Text dialogueText;
+    public Button skipButton; 
 
     private string[] _dialogueLines;
     private int _dialogueProgress;
@@ -32,6 +34,11 @@ public class DialogueManager : MonoBehaviour
             AdvanceDialogue();
         else
             EndDialogue();
+    }
+
+    public void SkipDialogue()  
+    {
+        EndDialogue();
     }
 
     private void AdvanceDialogue()
