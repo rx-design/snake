@@ -10,6 +10,9 @@ public class GameResult : MonoBehaviour
     public Button nextLevelButton;
     public Button playAgainButton;
     public Button mainMenuButton;
+    public AudioSource victorySound;
+
+    public AudioSource lossSound;
 
     private void OnEnable()
     {
@@ -34,6 +37,7 @@ public class GameResult : MonoBehaviour
         switch (result)
         {
             case Result.Win:
+                victorySound.Play();
                 nextLevelButton.gameObject.SetActive(true);
                 playAgainButton.gameObject.SetActive(false);
                 mainMenuButton.gameObject.SetActive(false);
