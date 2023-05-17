@@ -10,6 +10,7 @@ public class GameResult : MonoBehaviour
     public Button nextLevelButton;
     public Button playAgainButton;
     public Button mainMenuButton;
+    public Button ButtonEndingScene;
     public AudioSource victorySound;
 
     public AudioSource lossSound;
@@ -51,6 +52,7 @@ public class GameResult : MonoBehaviour
                 break;
             case Result.Lose:
             default:
+                lossSound.Play();
                 nextLevelButton.gameObject.SetActive(false);
                 playAgainButton.gameObject.SetActive(true);
                 mainMenuButton.gameObject.SetActive(true);
