@@ -10,7 +10,6 @@ public class FoodManager : MonoBehaviour
     public BoxCollider2D gridArea;
     public Snake snake;
     public Food foodPrefab;
-    Color newColor = new Color(103f / 255f, 38f / 255f, 1f / 255f);
 
     private readonly List<Food> _food = new();
 
@@ -21,39 +20,35 @@ public class FoodManager : MonoBehaviour
 
     private static Letter GetRandomLetter()
     {
-        return (Letter)Enum.GetValues(typeof(Letter)).GetValue(Random.Range(0, 25));
+        var letters = Enum.GetValues(typeof(Letter));
+        var randomIndex = Random.Range(0, letters.Length);
+
+        return (Letter)letters.GetValue(randomIndex);
     }
 
-    private void RandomizeAll(char[] initialLetters, char[] letters)
+    private void RandomizeAll(char[] initialLetters, char[] letters, bool shouldRandomize)
     {
-        foreach (var oldFood in _food)
-        {
-            Destroy(oldFood.gameObject);
-        }
+        if (!shouldRandomize) return;
+
+        foreach (var oldFood in _food.Where(oldFood => oldFood != null)) Destroy(oldFood.gameObject);
 
         _food.Clear();
 
         var chars = new List<char>();
 
         for (var i = 0; i < letters.Length; i++)
-        {
             if (letters[i] == '_')
-            {
                 chars.Add(initialLetters[i]);
-            }
-        }
 
         foreach (Letter letter in chars)
         {
-            var newFood = Instantiate(foodPrefab,  GetRandomPosition(), Quaternion.identity);
+            var newFood = Instantiate(foodPrefab, GetRandomPosition(), Quaternion.identity);
             newFood.letter = letter;
-            newFood.GetComponent<SpriteRenderer>().color = newColor; // TODO: Use texture
             _food.Add(newFood);
         }
 
-        var newFakeFood = Instantiate(foodPrefab,  GetRandomPosition(), Quaternion.identity);
+        var newFakeFood = Instantiate(foodPrefab, GetRandomPosition(), Quaternion.identity);
         newFakeFood.letter = GetRandomLetter();
-        newFakeFood.GetComponent<SpriteRenderer>().color = newColor; // TODO: Use texture
         _food.Add(newFakeFood);
     }
 
@@ -78,10 +73,7 @@ public class FoodManager : MonoBehaviour
                 0.0f
             );
 
-            if (!IsValidPosition(position))
-            {
-                continue;
-            }
+            if (!IsValidPosition(position)) continue;
 
             return position;
         }

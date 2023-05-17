@@ -1,22 +1,28 @@
+using System;
 using Enums;
 using UnityEngine;
 using UnityEngine.Events;
-using TMPro;
 
 public class Food : MonoBehaviour
 {
-  public static readonly UnityEvent<Food> IsTaken = new();
-  public Letter letter;
-  public TMP_Text letterDisplay;
+    public static readonly UnityEvent<Food> IsTaken = new();
+    public Letter letter;
+    public SpriteRenderer spriteRenderer;
+    public Sprite[] sprites;
 
-  void Start()
-  {
-    letterDisplay.text = letter.ToString();
-  }
+    private void Start()
+    {
+        spriteRenderer.sprite = sprites[GetLetterIndex()];
+    }
 
-  private void OnTriggerEnter2D(Collider2D other)
-  {
-    if (!other.CompareTag("Player")) return;
-    IsTaken?.Invoke(this);
-  }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
+        IsTaken?.Invoke(this);
+    }
+
+    private int GetLetterIndex()
+    {
+        return Array.IndexOf(Enum.GetValues(typeof(Letter)), letter);
+    }
 }

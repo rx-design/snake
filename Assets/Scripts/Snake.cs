@@ -63,6 +63,7 @@ public class Snake : MonoBehaviour
       return;
     }
 
+<<<<<<< HEAD
     if (_input != Vector2.zero)
     {
       _head.SetDirection(_input, Vector2.zero);
@@ -71,6 +72,22 @@ public class Snake : MonoBehaviour
     for (var i = _segments.Count - 1; i > 0; i--)
     {
       _segments[i].Follow(_segments[i - 1], i, _segments.Count);
+=======
+    private void Update()
+    {
+        if (_head.Direction.x != 0.0f)
+        {
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                _input = Vector2.up;
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) _input = Vector2.down;
+        }
+        else if (_head.Direction.y != 0.0f)
+        {
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+                _input = Vector2.left;
+            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) _input = Vector2.right;
+        }
+>>>>>>> c302ffc0a8f90b8aa46e95560d165b61691712de
     }
 
     var direction = _head.Direction;
@@ -107,6 +124,7 @@ public class Snake : MonoBehaviour
 
     for (var i = 1; i < _segments.Count; i++)
     {
+<<<<<<< HEAD
       Destroy(_segments[i].gameObject);
     }
 
@@ -114,6 +132,39 @@ public class Snake : MonoBehaviour
     _segments.Add(_head);
 
     for (var i = 1; i < initialSize; i++)
+=======
+        if (Time.time < _nextUpdate) return;
+
+        if (_input != Vector2.zero) _head.SetDirection(_input, Vector2.zero);
+
+        for (var i = _segments.Count - 1; i > 0; i--) _segments[i].Follow(_segments[i - 1], i, _segments.Count);
+
+        var direction = _head.Direction;
+        var position = _head.transform.position;
+
+        _head.transform.position = new Vector3(
+            Mathf.Round(position.x) + direction.x,
+            Mathf.Round(position.y) + direction.y,
+            0.0f
+        );
+
+        _nextUpdate = Time.time + 1.0f / (speed * speedMultiplier);
+    }
+
+    private void OnEnable()
+    {
+        GameManager.GameStarted.AddListener(ResetState);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Food"))
+            Grow();
+        else if (other.CompareTag("Obstacle")) IsDied?.Invoke();
+    }
+
+    public bool Occupies(Vector3 position)
+>>>>>>> c302ffc0a8f90b8aa46e95560d165b61691712de
     {
       _segments.Add(Instantiate(segmentPrefab));
     }
@@ -129,7 +180,23 @@ public class Snake : MonoBehaviour
     }
     else if (other.CompareTag("Obstacle"))
     {
+<<<<<<< HEAD
       IsDied?.Invoke();
     }
   }
+=======
+        _input = Vector2.zero;
+        _head.SetDirection(Vector2.right, Vector2.zero);
+        _head.transform.position = Vector3.zero;
+
+        for (var i = 1; i < _segments.Count; i++) Destroy(_segments[i].gameObject);
+
+        _segments.Clear();
+        _segments.Add(_head);
+
+        for (var i = 1; i < initialSize; i++) _segments.Add(Instantiate(segmentPrefab));
+
+        transform.position = Vector3.zero;
+    }
+>>>>>>> c302ffc0a8f90b8aa46e95560d165b61691712de
 }
