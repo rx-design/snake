@@ -31,6 +31,12 @@ public class GameManager : MonoBehaviour
     public void Awake()
     {
         instance = this;
+
+        // If the scene is the EndingScene, disable the GameManager
+        if (SceneManager.GetActiveScene().name == "EndingScene")
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     public void Start()
@@ -78,6 +84,11 @@ public class GameManager : MonoBehaviour
     public void GoToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void GoToEndingScene()
+    {
+        SceneManager.LoadScene("EndingScene");
     }
 
     private void DecreaseLives()

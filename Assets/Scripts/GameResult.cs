@@ -41,17 +41,20 @@ public class GameResult : MonoBehaviour
                 nextLevelButton.gameObject.SetActive(true);
                 playAgainButton.gameObject.SetActive(false);
                 mainMenuButton.gameObject.SetActive(false);
+                ButtonEndingScene.gameObject.SetActive(false);
                 break;
             case Result.GameWin:
                 nextLevelButton.gameObject.SetActive(false);
                 playAgainButton.gameObject.SetActive(false);
-                mainMenuButton.gameObject.SetActive(true);
+                mainMenuButton.gameObject.SetActive(false);
+                ButtonEndingScene.gameObject.SetActive(true);
                 break;
             case Result.Lose:
             default:
                 nextLevelButton.gameObject.SetActive(false);
                 playAgainButton.gameObject.SetActive(true);
                 mainMenuButton.gameObject.SetActive(true);
+                ButtonEndingScene.gameObject.SetActive(false);
                 break;
         }
     }
