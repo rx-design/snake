@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
             _isPreStart = false;
             Time.timeScale = 1.0f;
         }
-        else if (_isPlaying && Input.GetKeyDown(KeyCode.Space))
+        else if (_isPlaying && Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
         }
@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
         GameManager.GameEnded.AddListener(OnGameEnded);
     }
 
-    private void TogglePause()
+    public void TogglePause()
     {
         if (_isPaused)
         {
