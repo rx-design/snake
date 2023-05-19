@@ -10,7 +10,7 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        musicSource.mute = !Settings.HasSound();
+        // musicSource.mute = !Settings.HasSound();
     }
 
     private void OnEnable()
@@ -25,7 +25,7 @@ public class SoundManager : MonoBehaviour
 
     private void OnSoundSettingUpdated(bool hasSound)
     {
-        musicSource.mute = !hasSound;
+        // musicSource.mute = !hasSound;
     }
 
     public void PlayMusic()
