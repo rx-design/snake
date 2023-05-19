@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public List<Word> words;
 
     private char[] _chars;
-    private int _currentLevel = 1;
+    private int _currentLevel;
     private bool _dialogueShown;
     private int _lives;
     private int _score;
@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public void Awake()
     {
         instance = this;
+        _currentLevel = GetLevel();
 
         // If the scene is the EndingScene, disable the GameManager
         if (SceneManager.GetActiveScene().name == "EndingScene")
@@ -57,6 +58,17 @@ public class GameManager : MonoBehaviour
         _dialogueShown = true;
 
         soundManager.PlayMusic();
+    }
+
+    private static int GetLevel()
+    {
+        return Settings.GetLanguageLevel() switch
+        {
+            LanguageLevel.A => 1,
+            LanguageLevel.B => 6,
+            LanguageLevel.C => 11,
+            _ => 1
+        };
     }
 
     private void OnEnable()
