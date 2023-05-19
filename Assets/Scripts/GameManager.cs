@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     private int _score;
     private int _scoreAtLevelStart;
 
+    public SoundManager soundManager;
+
     public void Awake()
     {
         instance = this;
@@ -53,6 +55,8 @@ public class GameManager : MonoBehaviour
         if (_dialogueShown) return;
         DialogueManager.instance.StartDialogue(dialogue);
         _dialogueShown = true;
+
+        soundManager.PlayMusic();
     }
 
     private void OnEnable()
@@ -90,11 +94,13 @@ public class GameManager : MonoBehaviour
     private void DecreaseLives()
     {
         _lives--;
+        soundManager.PlaySound(1);
     }
 
     private void IncreaseScore(bool inOrder)
     {
         _score += inOrder ? 2 * _lives : 1;
+        soundManager.PlaySound(0);
     }
 
     private Word GetWord()
