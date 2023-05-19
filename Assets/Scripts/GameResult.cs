@@ -10,6 +10,7 @@ public class GameResult : MonoBehaviour
     public Button nextLevelButton;
     public Button playAgainButton;
     public Button mainMenuButton;
+    public Button ButtonEndingScene;
     public AudioSource victorySound;
 
     public AudioSource lossSound;
