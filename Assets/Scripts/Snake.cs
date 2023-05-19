@@ -20,6 +20,11 @@ public class Snake : MonoBehaviour
     {
         _head = GetComponent<SnakeSegment>();
 
+        if (Settings.IsHighSpeed())
+        {
+            speed = 64.0f;
+        }
+
         if (_head != null) return;
         _head = gameObject.AddComponent<SnakeSegment>();
         _head.hideFlags = HideFlags.HideInInspector;
