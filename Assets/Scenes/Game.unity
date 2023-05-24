@@ -1680,7 +1680,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press w, a, s, d to start the game
+  m_text: Press w, a, s, d or arrow key to start the game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a777ed5432c96a48af754fe53323e13, type: 2}
   m_sharedMaterial: {fileID: -7873852722062603892, guid: 8a777ed5432c96a48af754fe53323e13, type: 2}
