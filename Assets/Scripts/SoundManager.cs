@@ -1,16 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class SoundManager : MonoBehaviour
 {
 
     public AudioSource musicSource;
-    public List<AudioSource> sounds;
-    public int index = -1;
+
+    public AudioSource sfxSource;
+    public List<AudioClip> sounds;
+
+    /*
+    0 - Click
+    1 - Bite
+    2 - Wrong
+    3 - Loss
+    4 - Success
+    */
 
     private void Awake()
     {
-        // musicSource.mute = !Settings.HasSound();
+        musicSource.mute = Settings.HasSound();
+        sfxSource.mute = Settings.HasSound();
     }
 
     private void OnEnable()
@@ -25,7 +36,8 @@ public class SoundManager : MonoBehaviour
 
     private void OnSoundSettingUpdated(bool hasSound)
     {
-        // musicSource.mute = !hasSound;
+        musicSource.mute = hasSound;
+        sfxSource.mute = hasSound;
     }
 
     public void PlayMusic()
@@ -40,6 +52,6 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(int i)
     {
-        sounds[i].Play();
+        sfxSource.PlayOneShot(sounds[i]);
     }
 }

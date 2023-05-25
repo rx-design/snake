@@ -106,13 +106,13 @@ public class GameManager : MonoBehaviour
     private void DecreaseLives()
     {
         _lives--;
-        soundManager.PlaySound(1);
+        soundManager.PlaySound(2);
     }
 
     private void IncreaseScore(bool inOrder)
     {
         _score += inOrder ? 2 * _lives : 1;
-        soundManager.PlaySound(0);
+        soundManager.PlaySound(1);
     }
 
     private Word GetWord()
