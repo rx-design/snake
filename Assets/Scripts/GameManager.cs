@@ -15,9 +15,14 @@ public class GameManager : MonoBehaviour
     public static readonly UnityEvent GameStarted = new();
     public static readonly UnityEvent<Result, int> GameEnded = new();
     public static readonly UnityEvent<string> WordHintUpdated = new();
+
+    // Add this line
+    public static readonly UnityEvent GamePreparing = new UnityEvent();
+
     public string[] dialogue;
     public int startingLives = 5;
     public List<Word> words;
+    public HintTable hintTable;
 
     private char[] _chars;
     private int _currentLevel;
@@ -51,6 +56,12 @@ public class GameManager : MonoBehaviour
         ScoreUpdated?.Invoke(_score);
         CharsUpdated?.Invoke(word.chars, _chars, true);
         WordHintUpdated?.Invoke(word.hint);
+
+        // Move this line to here from HintTable.Start()
+        hintTable.ShowHint(word.hint);
+
+        // Trigger the GamePreparing event before GameStarted event
+        GamePreparing?.Invoke();
         GameStarted?.Invoke();
 
         if (_dialogueShown) return;
