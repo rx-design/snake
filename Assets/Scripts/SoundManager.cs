@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class SoundManager : MonoBehaviour
 {
-
+    public static SoundManager instance;
     public AudioSource musicSource;
-
     public AudioSource sfxSource;
     public List<AudioClip> sounds;
 
@@ -20,6 +18,17 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
         musicSource.mute = Settings.HasSound();
         sfxSource.mute = Settings.HasSound();
     }

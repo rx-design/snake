@@ -19,11 +19,7 @@ public class Snake : MonoBehaviour
     private void Awake()
     {
         _head = GetComponent<SnakeSegment>();
-
-        if (Settings.IsHighSpeed())
-        {
-            speed = 64.0f;
-        }
+        speed += 4.0f * Settings.GetSpeedMultiplier();
 
         if (_head != null) return;
         _head = gameObject.AddComponent<SnakeSegment>();

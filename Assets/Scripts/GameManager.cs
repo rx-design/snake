@@ -26,8 +26,6 @@ public class GameManager : MonoBehaviour
     private int _score;
     private int _scoreAtLevelStart;
 
-    public SoundManager soundManager;
-
     public void Awake()
     {
         instance = this;
@@ -38,6 +36,8 @@ public class GameManager : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         }
+
+        SoundManager.instance.sfxSource.volume = 0.74f;
     }
 
     public void Start()
@@ -56,8 +56,6 @@ public class GameManager : MonoBehaviour
         if (_dialogueShown) return;
         DialogueManager.instance.StartDialogue(dialogue);
         _dialogueShown = true;
-
-        soundManager.PlayMusic();
     }
 
     private static int GetLevel()
@@ -106,13 +104,13 @@ public class GameManager : MonoBehaviour
     private void DecreaseLives()
     {
         _lives--;
-        soundManager.PlaySound(2);
+        SoundManager.instance.PlaySound(2);
     }
 
     private void IncreaseScore(bool inOrder)
     {
         _score += inOrder ? 2 * _lives : 1;
-        soundManager.PlaySound(1);
+        SoundManager.instance.PlaySound(1);
     }
 
     private Word GetWord()

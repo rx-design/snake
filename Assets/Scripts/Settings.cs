@@ -8,11 +8,11 @@ public class Settings : MonoBehaviour
 {
     public static readonly UnityEvent<string> LanguageLevelUpdated = new();
     public static readonly UnityEvent<bool> SoundUpdated = new();
-    public static readonly UnityEvent<bool> SpeedUpdated = new();
+    public static readonly UnityEvent<int> SpeedMultiplierUpdated = new();
 
     public Toggle[] languageLevels;
+    public Toggle[] speedMultipliers;
     public Toggle soundToggle;
-    public Toggle speedToggle;
 
     private void Awake()
     {
@@ -24,8 +24,11 @@ public class Settings : MonoBehaviour
                 toggle.isOn = true;
             }
         }
+
+        var speedMultiplier = GetSpeedMultiplier();
+        speedMultipliers[speedMultiplier].isOn = true;
+
         soundToggle.isOn = HasSound();
-        speedToggle.isOn = IsHighSpeed();
     }
 
     private void Start()
@@ -34,8 +37,11 @@ public class Settings : MonoBehaviour
         {
             toggle.onValueChanged.AddListener(ChangeLanguageLevel);
         }
+        foreach (var toggle in speedMultipliers)
+        {
+            toggle.onValueChanged.AddListener(ChangeSpeedMultiplier);
+        }
         soundToggle.onValueChanged.AddListener(ToggleSound);
-        speedToggle.onValueChanged.AddListener(ToggleSpeed);
     }
 
     public static LanguageLevel GetLanguageLevel()
@@ -66,6 +72,32 @@ public class Settings : MonoBehaviour
         LanguageLevelUpdated.Invoke(value);
     }
 
+    public static int GetSpeedMultiplier()
+    {
+        return PlayerPrefs.GetInt("SpeedMultiplier", 0);
+    }
+
+    public void ChangeSpeedMultiplier(bool _)
+    {
+        for (var i = 0; i < speedMultipliers.Length; i++)
+        {
+            if (!speedMultipliers[i].isOn)
+            {
+                continue;
+            }
+
+            ChangeSpeedMultiplier(i);
+        }
+    }
+
+    public static void ChangeSpeedMultiplier(int value)
+    {
+        PlayerPrefs.SetInt("SpeedMultiplier", value);
+        PlayerPrefs.Save();
+
+        SpeedMultiplierUpdated.Invoke(value);
+    }
+
     public static bool HasSound()
     {
         return PlayerPrefs.GetInt("Sound", 0) == 1;;
@@ -80,22 +112,6 @@ public class Settings : MonoBehaviour
         PlayerPrefs.Save();
 
         SoundUpdated.Invoke(!hasSound);
-    }
-
-    public static bool IsHighSpeed()
-    {
-        return PlayerPrefs.GetInt("HighSpeed", 0) == 1;
-    }
-
-    public static void ToggleSpeed(bool _)
-    {
-        var isHighSpeed = IsHighSpeed();
-        var value = isHighSpeed ? 0 : 1;
-
-        PlayerPrefs.SetInt("HighSpeed", value);
-        PlayerPrefs.Save();
-
-        SpeedUpdated.Invoke(!isHighSpeed);
     }
 
     public void ShowSettings()

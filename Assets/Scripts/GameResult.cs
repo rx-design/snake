@@ -11,7 +11,6 @@ public class GameResult : MonoBehaviour
     public Button playAgainButton;
     public Button mainMenuButton;
     public Button ButtonEndingScene;
-    public SoundManager soundManager;
 
     private void OnEnable()
     {
@@ -36,7 +35,7 @@ public class GameResult : MonoBehaviour
         switch (result)
         {
             case Result.Win:
-                soundManager.PlaySound(4);
+                SoundManager.instance.PlaySound(4);
                 nextLevelButton.gameObject.SetActive(true);
                 playAgainButton.gameObject.SetActive(false);
                 mainMenuButton.gameObject.SetActive(false);
@@ -50,7 +49,7 @@ public class GameResult : MonoBehaviour
                 break;
             case Result.Lose:
             default:
-                soundManager.PlaySound(3);
+                SoundManager.instance.PlaySound(3);
                 nextLevelButton.gameObject.SetActive(false);
                 playAgainButton.gameObject.SetActive(true);
                 mainMenuButton.gameObject.SetActive(true);
