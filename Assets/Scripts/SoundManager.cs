@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
-    public AudioSource musicSource;
+    public AudioSource menuMusicSource;
+    public AudioSource gameMusicSource;
     public AudioSource sfxSource;
     public List<AudioClip> sounds;
 
@@ -29,34 +31,40 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        musicSource.mute = Settings.HasSound();
-        sfxSource.mute = Settings.HasSound();
+        ToggleMute(Settings.HasSound());
     }
 
     private void OnEnable()
     {
-        Settings.SoundUpdated.AddListener(OnSoundSettingUpdated);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Settings.SoundUpdated.AddListener(ToggleMute);
     }
 
     private void OnDisable()
     {
-        Settings.SoundUpdated.RemoveListener(OnSoundSettingUpdated);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Settings.SoundUpdated.RemoveListener(ToggleMute);
     }
 
-    private void OnSoundSettingUpdated(bool hasSound)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        musicSource.mute = hasSound;
+        if (scene.name == "Menu")
+        {
+            menuMusicSource.Play();
+            gameMusicSource.Stop();
+        }
+        else
+        {
+            menuMusicSource.Stop();
+            gameMusicSource.Play();
+        }
+    }
+
+    private void ToggleMute(bool hasSound)
+    {
+        menuMusicSource.mute = hasSound;
+        gameMusicSource.mute = hasSound;
         sfxSource.mute = hasSound;
-    }
-
-    public void PlayMusic()
-    {
-        musicSource.Play();
-    }
-
-    public void PauseMusic()
-    {
-        musicSource.Pause();
     }
 
     public void PlaySound(int i)

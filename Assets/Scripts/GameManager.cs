@@ -41,8 +41,6 @@ public class GameManager : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         }
-
-        SoundManager.instance.sfxSource.volume = 0.74f;
     }
 
     public void Start()
