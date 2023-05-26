@@ -13,15 +13,19 @@ public class Settings : MonoBehaviour
     public Toggle[] languageLevels;
     public Toggle[] speedMultipliers;
     public Toggle soundToggle;
+    public bool isSimplified;
 
     private void Awake()
     {
-        var languageLevel = GetLanguageLevel();
-        foreach (var toggle in languageLevels)
+        if (!isSimplified)
         {
-            if (toggle.name == languageLevel.ToString())
+            var languageLevel = GetLanguageLevel();
+            foreach (var toggle in languageLevels)
             {
-                toggle.isOn = true;
+                if (toggle.name == languageLevel.ToString())
+                {
+                    toggle.isOn = true;
+                }
             }
         }
 
@@ -33,14 +37,19 @@ public class Settings : MonoBehaviour
 
     private void Start()
     {
-        foreach (var toggle in languageLevels)
+        if (!isSimplified)
         {
-            toggle.onValueChanged.AddListener(ChangeLanguageLevel);
+            foreach (var toggle in languageLevels)
+            {
+                toggle.onValueChanged.AddListener(ChangeLanguageLevel);
+            }
         }
+
         foreach (var toggle in speedMultipliers)
         {
             toggle.onValueChanged.AddListener(ChangeSpeedMultiplier);
         }
+
         soundToggle.onValueChanged.AddListener(ToggleSound);
     }
 
