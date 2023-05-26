@@ -48,7 +48,7 @@ public class SoundManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Menu")
+        if (scene.name == "MainMenu")
         {
             menuMusicSource.Play();
             gameMusicSource.Stop();
