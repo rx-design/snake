@@ -19,11 +19,16 @@ public class Snake : MonoBehaviour
     private void Awake()
     {
         _head = GetComponent<SnakeSegment>();
-        speed += 4.0f * Settings.GetSpeedMultiplier();
+        SetSpeed(Settings.GetSpeedMultiplier());
 
         if (_head != null) return;
         _head = gameObject.AddComponent<SnakeSegment>();
         _head.hideFlags = HideFlags.HideInInspector;
+    }
+
+    private void SetSpeed(int multiplier)
+    {
+        speed = 4.0f + 4.0f * multiplier;
     }
 
     private void Update()
@@ -65,6 +70,13 @@ public class Snake : MonoBehaviour
     private void OnEnable()
     {
         GameManager.GameStarted.AddListener(ResetState);
+        Settings.SpeedMultiplierUpdated.AddListener(SetSpeed);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.GameStarted.RemoveListener(ResetState);
+        Settings.SpeedMultiplierUpdated.RemoveListener(SetSpeed);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

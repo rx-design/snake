@@ -84,6 +84,11 @@ public class GameManager : MonoBehaviour
         Snake.IsDied.AddListener(() => OnGameOver(Result.Lose));
     }
 
+    private void OnDisable()
+    {
+        Food.IsTaken.RemoveListener(OnFoodIsTaken);
+        Snake.IsDied.RemoveListener(() => OnGameOver(Result.Lose));
+    }
 
     public void RestartLevel()
     {

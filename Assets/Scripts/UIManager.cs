@@ -45,6 +45,13 @@ public class UIManager : MonoBehaviour
         GameManager.GamePreparing.AddListener(OnGamePreparing); // Listen to GamePreparing event
     }
 
+    private void OnDisable()
+    {
+        GameManager.GameStarted.RemoveListener(OnGameStarted);
+        GameManager.GameEnded.RemoveListener(OnGameEnded);
+        GameManager.GamePreparing.RemoveListener(OnGamePreparing);
+    }
+
     private void OnGamePreparing()
     {
         hintPanel.SetActive(true); // Show hint panel when the game is preparing

@@ -18,6 +18,11 @@ public class FoodManager : MonoBehaviour
         GameManager.CharsUpdated.AddListener(RandomizeAll);
     }
 
+    private void OnDisable()
+    {
+        GameManager.CharsUpdated.RemoveListener(RandomizeAll);
+    }
+
     private static Letter GetRandomLetter()
     {
         var letters = Enum.GetValues(typeof(Letter));

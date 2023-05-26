@@ -17,6 +17,11 @@ public class GameResult : MonoBehaviour
         GameManager.GameEnded.AddListener(UpdateText);
     }
 
+    private void OnDisable()
+    {
+        GameManager.GameEnded.RemoveListener(UpdateText);
+    }
+
     private void UpdateText(Result result, int value)
     {
         title.text = result switch

@@ -16,6 +16,14 @@ public class GameInfo : MonoBehaviour
         GameManager.WordHintUpdated.AddListener(UpdateHint);
     }
 
+    private void OnDisable()
+    {
+        GameManager.LivesUpdated.RemoveListener(UpdateLives);
+        GameManager.ScoreUpdated.RemoveListener(UpdateScore);
+        GameManager.CharsUpdated.RemoveListener(UpdateChars);
+        GameManager.WordHintUpdated.RemoveListener(UpdateHint);
+    }
+
     private void UpdateHint(string value)
     {
         hint.text = value;
