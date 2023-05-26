@@ -6,7 +6,6 @@ public class UIManager : MonoBehaviour
     public GameObject gameInfo;
     public GameObject gamePause;
     public GameObject gameResult;
-    public GameObject gameControls;
     public GameObject gameDialogue;
     public GameObject gameSettings;
     public GameObject hintPanel;  // New: Added Hint Panel
@@ -29,7 +28,6 @@ public class UIManager : MonoBehaviour
         if (_isPreStart && Input.anyKey)
         {
             hintPanel.SetActive(false); // Hide hint panel when a key is pressed
-            gameControls.gameObject.SetActive(false);
             _isPlaying = true;
             _isPreStart = false;
             Time.timeScale = 1.0f;
@@ -79,13 +77,6 @@ public class UIManager : MonoBehaviour
         gameResult.gameObject.SetActive(false);
         gameInfo.gameObject.SetActive(true);
         gameSettings.gameObject.SetActive(false);
-
-        if (!_isControlSchemeShown)
-        {
-            gameControls.gameObject.SetActive(true);
-            _isControlSchemeShown = true;
-        }
-
         _isPreStart = true;
     }
 
