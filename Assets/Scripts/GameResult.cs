@@ -17,7 +17,7 @@ public class GameResult : MonoBehaviour
         GameManager.GameEnded.AddListener(UpdateText);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.GameEnded.RemoveListener(UpdateText);
     }

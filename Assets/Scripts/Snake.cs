@@ -73,7 +73,7 @@ public class Snake : MonoBehaviour
         Settings.SpeedMultiplierUpdated.AddListener(SetSpeed);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.GameStarted.RemoveListener(ResetState);
         Settings.SpeedMultiplierUpdated.RemoveListener(SetSpeed);

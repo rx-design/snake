@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
         GameManager.GamePreparing.AddListener(OnGamePreparing); // Listen to GamePreparing event
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.GameStarted.RemoveListener(OnGameStarted);
         GameManager.GameEnded.RemoveListener(OnGameEnded);

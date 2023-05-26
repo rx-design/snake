@@ -40,7 +40,7 @@ public class SoundManager : MonoBehaviour
         Settings.SoundUpdated.AddListener(ToggleMute);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         Settings.SoundUpdated.RemoveListener(ToggleMute);

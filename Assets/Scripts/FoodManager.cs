@@ -18,7 +18,7 @@ public class FoodManager : MonoBehaviour
         GameManager.CharsUpdated.AddListener(RandomizeAll);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.CharsUpdated.RemoveListener(RandomizeAll);
     }

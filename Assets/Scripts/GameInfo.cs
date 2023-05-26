@@ -16,7 +16,7 @@ public class GameInfo : MonoBehaviour
         GameManager.WordHintUpdated.AddListener(UpdateHint);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.LivesUpdated.RemoveListener(UpdateLives);
         GameManager.ScoreUpdated.RemoveListener(UpdateScore);
