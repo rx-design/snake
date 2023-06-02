@@ -113,6 +113,6 @@ public class Snake : MonoBehaviour
 
         for (var i = 1; i < initialSize; i++) _segments.Add(Instantiate(segmentPrefab));
 
-        transform.position = Vector3.zero;
+        _nextUpdate = Time.time;
     }
 }
